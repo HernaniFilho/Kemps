@@ -40,15 +40,15 @@ public class Kemps {
 
         //Comprar 4 cartas iniciais
         for (int i = 0; i < 4; i++) {
-            jogadorDois.comprarCarta(baralho);
-            jogadorTres.comprarCarta(baralho);
-            jogadorQuatro.comprarCarta(baralho);
+            jogadorDois.comprarCarta(baralho.remove(baralho.size()-1));
+            jogadorTres.comprarCarta(baralho.remove(baralho.size()-1));
+            jogadorQuatro.comprarCarta(baralho.remove(baralho.size()-1));
 
             //Jogador compra por ultimo
-            jogadorUm.comprarCarta(baralho);
+            jogadorUm.comprarCarta(baralho.remove(baralho.size()-1));
 
             //Checagem para mão inicial inválida, ou seja, ter 3 cartas iguais, utilizando o fezGames()
-            if (i >= 3) {
+            if (i >= 2) {
                 for (int j = 0; j < jogadores.size(); j++) {
                     boolean todasCartasIguais = jogadores.get(i).fezGames();
                     if (todasCartasIguais) { //Reinicia o jogo, talvez tenha que repaint()

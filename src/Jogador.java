@@ -35,8 +35,7 @@ public class Jogador {
         return false;
     }
 
-    public void comprarCarta(ArrayList<Carta> baralho) {
-        Carta c = baralho.remove(baralho.size()-1); //Remove da ultima posição
+    public void comprarCarta(Carta c) {
         this.cartas.add(c);
     }
 
