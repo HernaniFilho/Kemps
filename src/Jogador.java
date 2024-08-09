@@ -34,4 +34,17 @@ public class Jogador {
             return true;
         return false;
     }
+
+    public void comprarCarta(ArrayList<Carta> baralho) {
+        Carta c = baralho.remove(baralho.size()-1); //Remove da ultima posição
+        this.cartas.add(c);
+    }
+
+    public void descartarCarta(Carta c) {
+        this.cartas.remove(c);
+    }
+
+    public ArrayList<Carta> getCartas() {
+        return this.cartas;
+    }
 }
