@@ -9,12 +9,103 @@ import javax.swing.*;
 public class Kemps {
     Jogador jogadorUm, jogadorDois, jogadorTres, jogadorQuatro;
     
+    //Baralho
     ArrayList<Carta> baralho;
     Random random = new Random();
+    //Mesa
     ArrayList<Carta> mesa;
+
+    //Janela do jogo
+    int janelaLargura = 1600;
+    int janelaAltura = 900;
+    int cartaLargura = 110; //Razão é 1/1.4
+    int cartaAltura = 154;
+
+    JFrame janelaJogo = new JFrame("Kemps");
+    JPanel painelJogo = new JPanel() {
+        @Override
+        public void paintComponent(Graphics g) {
+            super.paintComponent(g);
+
+            //Mudar para botao JodagorUm e Mesa
+            try {
+                //Jogador
+                //JogadorUm
+                for (int i = 0; i < jogadorUm.getCartas().size(); i++) {
+                    Carta carta = jogadorUm.getCartas().get(i);
+                    Image cartaImagem = new ImageIcon(getClass().getResource(carta.getCaminhoImagem())).getImage();
+                    g.drawImage(cartaImagem, 20 + (cartaLargura + 5)*i, janelaAltura - cartaAltura - 100, cartaLargura, cartaAltura, null);
+                }
+                //CPU
+                //JogadorDois
+                for (int i = 0; i < jogadorDois.getCartas().size(); i++) {
+                    Carta carta = jogadorDois.getCartas().get(i);
+                    Image cartaImagem = new ImageIcon(getClass().getResource("./cards/BACK.png")).getImage();
+                    //Se Games for declarado fazer if
+                    g.drawImage(cartaImagem, 20 + (cartaLargura + 5)*i, 20, cartaLargura, cartaAltura, null);
+                }
+                //JogadorTres
+                for (int i = 0; i < jogadorUm.getCartas().size(); i++) {
+                    Carta carta = jogadorUm.getCartas().get(i);
+                    Image cartaImagem = new ImageIcon(getClass().getResource("./cards/BACK.png")).getImage();
+                    //Se Games for declarado fazer if
+                    g.drawImage(cartaImagem, janelaLargura - cartaLargura - 40 - (cartaLargura + 5)*i, 20, cartaLargura, cartaAltura, null);
+                }
+                //JogadorQuatro
+                for (int i = 0; i < jogadorUm.getCartas().size(); i++) {
+                    Carta carta = jogadorUm.getCartas().get(i);
+                    Image cartaImagem = new ImageIcon(getClass().getResource("./cards/BACK.png")).getImage();
+                    //Se Games for declarado fazer if
+                    g.drawImage(cartaImagem, janelaLargura - cartaLargura - 40 - (cartaLargura + 5)*i, janelaAltura - cartaAltura - 100, cartaLargura, cartaAltura, null);
+                }
+
+
+                //Mesa
+                for (int i = 0; i < mesa.size(); i++) {
+                    Carta carta = mesa.get(i);
+                    Image cartaImagem = new ImageIcon(getClass().getResource(carta.getCaminhoImagem())).getImage();
+                    g.drawImage(cartaImagem, janelaLargura/4 + (cartaLargura + 5)*i, janelaAltura/2 - cartaAltura, cartaLargura, cartaAltura, null);
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    };
+
+    JPanel painelBotoes = new JPanel();
+    JButton botaoRecomecar = new JButton("Recomeçar");
 
     Kemps() {
         iniciarJogo();
+
+        //Iniciar Tela do Jogo
+        janelaJogo.setVisible(true);
+        janelaJogo.setSize(janelaLargura,janelaAltura);
+        janelaJogo.setLocationRelativeTo(null);
+        janelaJogo.setResizable(false);
+        janelaJogo.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        painelJogo.setLayout(new BorderLayout());
+        painelJogo.setBackground(new Color(53, 101, 77));
+        janelaJogo.add(painelJogo);
+
+        botaoRecomecar.setFocusable(false);
+        painelBotoes.add(botaoRecomecar);
+        janelaJogo.add(painelBotoes, BorderLayout.SOUTH);
+
+        //Event Listeners
+        botaoRecomecar.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+
+                System.out.println("Recomeçando!");
+                iniciarJogo();
+
+                painelJogo.repaint();
+            }
+        });
+
+        painelJogo.repaint();
     }
 
     public void iniciarJogo() {
